@@ -14,6 +14,7 @@ dist-ssr
 src-sidecar/dist
 src-sidecar/build
 target
+venv
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
