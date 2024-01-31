@@ -1,11 +1,12 @@
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { AIMessage, HumanMessage, SystemMessage } from 'langchain/schema';
+import { openAIAPIKey } from '../stores/settings';
+import { get } from 'svelte/store';
 
-const apikey = "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";
 
 const chatResponse = new ChatOpenAI({
-    openAIApiKey: apikey,
+    openAIApiKey: get(openAIAPIKey),
     temperature: 1,
     maxTokens: 256,
     modelName: "gpt-3.5-turbo",
