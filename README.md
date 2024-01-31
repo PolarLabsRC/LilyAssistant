@@ -1,8 +1,3 @@
-# Svelte + Vite
+<img src="https://raw.githubusercontent.com/PolarLabsRC/LilyAssistant/fd9f97bc4401f1a8c34e86919313770606041876/src/lib/images/fox.png" width="30">
 
-This template should help get you started developing with Tauri and Svelte in Vite.
-
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer).
-
+# LilyAssistant
