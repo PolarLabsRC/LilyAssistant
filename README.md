@@ -2,3 +2,5 @@
 
 # LilyAssistant
 Lily Assistant is a command-palette-style AI assistant that helps you integrate AI into your daily workflow.
+
+⚠️ Experimental project - use at your own risk ⚠️
