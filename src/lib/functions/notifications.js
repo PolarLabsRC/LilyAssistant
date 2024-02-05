@@ -1,17 +1,8 @@
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
 import { AIMessage, HumanMessage, SystemMessage } from 'langchain/schema';
-import { openAIAPIKey } from '../stores/settings';
+import { openAIModels } from '../stores/openai';
 import { get } from 'svelte/store';
-
-
-const chatResponse = new ChatOpenAI({
-    openAIApiKey: get(openAIAPIKey),
-    temperature: 1,
-    maxTokens: 256,
-    modelName: "gpt-3.5-turbo",
-    streaming: false
-});
 
 
 export const notify = async (body) => {
@@ -35,7 +26,7 @@ export const notifyAI = async (statement) => {
         new AIMessage("Email you've asking for is done!"),
         new HumanMessage(statement)
     ]
-    const body = (await chatResponse.call(notificationMessages)).content.toString()
+    const body = (await get(openAIModels).gpt35.call(notificationMessages)).content.toString()
     notify(body)
 }
 

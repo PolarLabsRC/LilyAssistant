@@ -24,5 +24,4 @@ const createOpenAIAPIKey = () => {
 };
 const openAIAPIKey = createOpenAIAPIKey();
 openAIAPIKey.loadFromConfig();
-console.log(get(openAIAPIKey))
 export { openAIAPIKey }

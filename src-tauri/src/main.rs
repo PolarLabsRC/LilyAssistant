@@ -83,13 +83,18 @@ fn focus_window() {
                 .collect()
         };
     
+        println!("Available window IDs:");
+        for window_id in &filtered_ids {
+            println!("{:X}", window_id);
+        }
+
         unsafe { xlib::XFree(children as *mut std::ffi::c_void) };
     
         filtered_ids.last().cloned()
     };
 
     if let Some(window_id) = window_id {
-        println!("Focusing window: {:?}", window_id);
+        println!("Focusing window: {:X}", window_id);
         unsafe {
             xlib::XSetInputFocus(display, window_id, xlib::RevertToParent, xlib::CurrentTime);
         }
@@ -104,7 +109,7 @@ fn focus_window() {
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![focus_window])
-        .plugin(tauri_plugin_store::Builder::default().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
+

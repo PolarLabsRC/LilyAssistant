@@ -24,7 +24,6 @@
         if (isActive && event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             setTimeout(() => callback(input), 0);
-            textInput.reset();
         }
     };
 </script>

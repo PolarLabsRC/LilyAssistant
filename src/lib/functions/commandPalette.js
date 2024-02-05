@@ -13,6 +13,7 @@ import { view } from "../stores/view";
 import { OptionRecord } from "./options";
 import { openAIModels } from "../stores/openai";
 import { get } from "svelte/store";
+import { textInput } from "../stores/textInput";
 
 
 const shorten = async () => {
@@ -117,6 +118,9 @@ export const commandPaletteOptions = [
         name: "Settings",
         description: "Configuration of assistant",
         icon: SettingsIcon,
-        callback: view.switchToSettings
+        callback: () => {
+            view.switchToSettings();-
+            textInput.reset();
+        }
     })
 ];
