@@ -6,7 +6,7 @@ use std::ptr;
 use std::process;
 
 // Global variable to store window_id
-
+// TODO: can spawn multiple windows on X and be unreliable in focusing
 fn get_window_pid(display: *mut xlib::Display, window: xlib::Window) -> Option<i32> {
     let mut actual_type: xlib::Atom = 0;
     let mut actual_format: i32 = 0;
@@ -83,18 +83,13 @@ fn focus_window() {
                 .collect()
         };
     
-        println!("Available window IDs:");
-        for window_id in &filtered_ids {
-            println!("{:X}", window_id);
-        }
-
         unsafe { xlib::XFree(children as *mut std::ffi::c_void) };
     
         filtered_ids.last().cloned()
     };
 
     if let Some(window_id) = window_id {
-        println!("Focusing window: {:X}", window_id);
+        println!("Focusing window: {:?}", window_id);
         unsafe {
             xlib::XSetInputFocus(display, window_id, xlib::RevertToParent, xlib::CurrentTime);
         }
@@ -109,7 +104,7 @@ fn focus_window() {
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![focus_window])
+        .plugin(tauri_plugin_store::Builder::default().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-
