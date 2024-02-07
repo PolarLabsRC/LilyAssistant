@@ -24,4 +24,19 @@ const createOpenAIAPIKey = () => {
 };
 const openAIAPIKey = createOpenAIAPIKey();
 openAIAPIKey.loadFromConfig();
+
 export { openAIAPIKey }
+
+const createAdvancedPropmpt = () => {
+    const { subscribe, set, update } = writable(false);
+    const togglePrompt = () => {
+        update((p) => {
+            return !p;
+        });
+    };
+
+    return { subscribe, set, update, togglePrompt }
+};
+const advancedPropmpt = createAdvancedPropmpt();
+export { advancedPropmpt }
+

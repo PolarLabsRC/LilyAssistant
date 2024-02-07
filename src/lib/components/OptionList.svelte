@@ -1,6 +1,7 @@
 <script>
     import Option from "./Option.svelte";
     import OptionInput from "./OptionInput.svelte";
+    import OptionFlag from "./OptionFlag.svelte";
     import { activeOption } from "../stores/main";
     import { textInput } from "../stores/textInput";
     import { OPTION_TYPE } from "../functions/options";
@@ -38,11 +39,13 @@
 
 <svelte:window on:keydown={onKeyDown} />
 <div class="flex flex-col">
-    {#each filterOptions($textInput) as option, index (option.name)}
+    {#each filteredOptions as option, index (option.name)}
         {#if option.type === OPTION_TYPE.input}
             <OptionInput {...{ isActive: index === $activeOption && focus, ...option }} />
         {:else if option.type === OPTION_TYPE.button}
             <Option {...{ isActive: index === $activeOption && focus, ...option }} />
+        {:else if option.type === OPTION_TYPE.flag}
+            <OptionFlag {...{ isActive: index === $activeOption && focus, ...option }} />
         {/if}
     {/each}
 </div>

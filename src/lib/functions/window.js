@@ -63,5 +63,4 @@ export const openOnShortcut = async () => {
 export const setupWindow = () => {
     appWindow.center();
     appWindow.setSkipTaskbar(true);
-    appWindow.setAlwaysOnTop(true);
 };

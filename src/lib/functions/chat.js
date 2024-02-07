@@ -2,16 +2,17 @@ import { HumanMessage } from "langchain/schema";
 import { chat, generatingFlag } from "../stores/chat";
 import { openAIModels } from "../stores/openai";
 import { get } from "svelte/store";
+import { advancedPropmpt } from "../stores/settings";
 
 const NICK = "Penguin"
 
 const getCurrentDate = () => {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
 
-    return `${day}/${month}/${year}`;
+  return `${day}/${month}/${year}`;
 };
 
 const ADVANCED_PROMPT = `Hey, it's Lily here, your fox! I'm brimming with positive vibes, and my mood might shift based on our convo and past times. Right now, I’m just kicking back and chatting
@@ -43,34 +44,42 @@ Facts:
 `
 
 export const tellAI = (message) => {
-    chat.addHumanMessage(message)
+  chat.addHumanMessage(message)
 }
 // TODO: add convo reseting
 // TODO: smooth scroll is buggy
 // TODO: textarea not working as it should
 
-export const prepareAI = (chatWrapper) => {
+const scrollToBottom = (element) => {
+  element.scrollTo(0, element.scrollHeight);
+};
+
+export const resetChat = () => {
   chat.reset()
-  chat.addSystemMessage(SIMPLE_PROMPT);
-  chat.addAIMessage(`Hi! What's up, ${NICK}?`);
+  if (get(advancedPropmpt)) {
+    chat.addSystemMessage(ADVANCED_PROMPT);
+  } else {
+    chat.addSystemMessage(SIMPLE_PROMPT);
+  }
+  // chat.addAIMessage(`Hi! What's up, ${NICK}?`); // TODO: add in settings
+};
 
-  const scrollToBottom = () => {
-    chatWrapper.scrollTo(0, chatWrapper.scrollHeight);
-  };
+export const setupChat = (chatWrapper) => {
+  resetChat()
 
-  chat.subscribe(async (ch) => {
-    scrollToBottom();
+  chat.subscribe(async (ch) => { // TODO: ugly but works
+    scrollToBottom(chatWrapper);
     const lastMessage = ch.slice(-1)[0];
     if (!(lastMessage instanceof HumanMessage)) return;
-    
+
     try {
       generatingFlag.setFlag();
-      scrollToBottom();
+      scrollToBottom(chatWrapper);
       const response = await get(openAIModels).gpt4t.invoke(ch);
       generatingFlag.unsetFlag();
-      scrollToBottom();
+      scrollToBottom(chatWrapper);
       chat.addAIMessage(response.content.toString());
-      scrollToBottom();
+      scrollToBottom(chatWrapper);
     } catch (error) {
       console.warn('Error invoking GPT-4');
     }

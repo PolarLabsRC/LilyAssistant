@@ -53,8 +53,7 @@
         "decorations": false,
         "title": "lily-assistant",
         "width": 800,
-        "height": 500,
-        "visible": false
+        "height": 500
       }
     ]
   }
