@@ -40,7 +40,7 @@ export const settingsOptions = [
     }),
     new OptionRecord({
         name: "Exit",
-        description: "Disable command pallete (exit process)",
+        description: "Disable command palette (exit process)",
         icon: ExitIcon,
         callback: () => {
             exit(0);
