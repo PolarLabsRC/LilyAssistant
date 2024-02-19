@@ -6,6 +6,7 @@ import { view } from "../stores/view";
 import { OPTION_TYPE, OptionRecord } from "./options";
 import { textInput } from "../stores/textInput";
 import { advancedPropmpt } from "../stores/settings";
+import { exit } from "@tauri-apps/api/process";
 
 export const settingsOptions = [
     new OptionRecord({
@@ -34,6 +35,14 @@ export const settingsOptions = [
         callback: () => {
             view.switchToApiSettings();
             textInput.reset()
+        }
+    }),
+    new OptionRecord({
+        name: "Exit",
+        description: "Disable command pallete (exit process)",
+        icon: LLMIcon,
+        callback: () => {
+            exit(0);
         }
     }),
     new OptionRecord({

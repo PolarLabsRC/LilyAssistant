@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "lily-assistant",
+    "productName": "Lily",
     "version": "0.0.0"
   },
   "tauri": {
@@ -31,21 +31,28 @@
         "readFile": true,
         "writeFile": true,
         "exists": true,
-        "scope": ["*/**", "$APPCONFIG/*", "$APPCONFIG/**","$APPCONFIG", "$APPCONFIG/"]
+        "scope": [
+          "*/**",
+          "$APPCONFIG/*",
+          "$APPCONFIG/**",
+          "$APPCONFIG",
+          "$APPCONFIG/"
+        ]
       }
     },
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.lily-assistant.ai",
+      "identifier": "com.lily.ai",
       "icon": [
         "icons/32x32.png",
         "icons/64x64.png",
         "icons/128x128.png",
         "icons/256x256.png"
-      ]
+      ],
+      "deb": {
+      }
     },
-    
     "security": {
       "csp": null
     },
@@ -54,7 +61,7 @@
         "fullscreen": false,
         "resizable": false,
         "decorations": false,
-        "title": "lily-assistant",
+        "title": "Lily",
         "width": 800,
         "height": 500
       }
