@@ -41,7 +41,6 @@
             if (!cleaning) {
                 enterTimeout = setTimeout(() => {
                     resetChat();
-                    console.log("executed");
                 }, 2500);
                 cleaning = true;
             }
@@ -50,7 +49,6 @@
 
     const onKeyUp = (event) => {
         const key = event.key;
-        console.log("ku");
         if (key === "Enter") {
             clearTimeout(enterTimeout);
             cleaning = false;
