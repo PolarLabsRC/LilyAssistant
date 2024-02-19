@@ -2,6 +2,7 @@ import ApiSettingsIcon from "../images/apiSettings.svg";
 import LLMIcon from "../images/llm.svg";
 import PromptIcon from "../images/prompt.svg";
 import BackIcon from "../images/back.svg";
+import ExitIcon from "../images/exit.svg"
 import { view } from "../stores/view";
 import { OPTION_TYPE, OptionRecord } from "./options";
 import { textInput } from "../stores/textInput";
@@ -40,7 +41,7 @@ export const settingsOptions = [
     new OptionRecord({
         name: "Exit",
         description: "Disable command pallete (exit process)",
-        icon: LLMIcon,
+        icon: ExitIcon,
         callback: () => {
             exit(0);
         }
