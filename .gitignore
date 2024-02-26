@@ -26,3 +26,4 @@ venv
 *.sln
 *.sw?
 *.swp
+__pycache__
