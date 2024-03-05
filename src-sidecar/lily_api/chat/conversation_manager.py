@@ -1,6 +1,8 @@
 import uuid
 from lily_api.chat.conversation import Conversation
 
+class ConversationNotFoundException(Exception):
+    pass
 
 class ConversationManager:
     def __init__(self):
@@ -12,4 +14,8 @@ class ConversationManager:
         return conversation_id
 
     def get(self, uuid):
-        return self.conversations[uuid]
+        try:
+            conversation = self.conversations[uuid]
+        except:
+            raise ConversationNotFoundException()
+        return conversation

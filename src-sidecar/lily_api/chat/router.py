@@ -1,7 +1,7 @@
 from uuid import UUID
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from lily_api.chat.conversation_manager import ConversationManager
+from lily_api.chat.conversation_manager import ConversationManager, ConversationNotFoundException
 
 chat_router = APIRouter(prefix="/chat")
 
@@ -27,7 +27,10 @@ class NewOut(BaseModel):
 
 @chat_router.post("/ask", response_model=AskOut)
 def ask(msg: AskIn):
-    conversation = conversation_manager.get(msg.conversationId)
+    try:
+        conversation = conversation_manager.get(msg.conversationId)
+    except ConversationNotFoundException as _:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
     response = conversation.ask(msg.prompt)
     return AskOut(message=response)
 
