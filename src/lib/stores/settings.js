@@ -1,6 +1,6 @@
 import { path } from "@tauri-apps/api";
 import { readTextFile } from "@tauri-apps/api/fs";
-import { get, writable } from "svelte/store";
+import { writable } from "svelte/store";
 
 
 const createOpenAIAPIKey = () => {
@@ -22,12 +22,9 @@ const createOpenAIAPIKey = () => {
 
     return { subscribe, set, update, reset, loadFromConfig }
 };
-const openAIAPIKey = createOpenAIAPIKey();
-openAIAPIKey.loadFromConfig();
 
-export { openAIAPIKey }
 
-const createAdvancedPropmpt = () => {
+const createAdvancedPrompt = () => {
     const { subscribe, set, update } = writable(false);
     const togglePrompt = () => {
         update((p) => {
@@ -37,6 +34,6 @@ const createAdvancedPropmpt = () => {
 
     return { subscribe, set, update, togglePrompt }
 };
-const advancedPropmpt = createAdvancedPropmpt();
-export { advancedPropmpt }
-
+export const openAIAPIKey = createOpenAIAPIKey();
+export const advancedPrompt = createAdvancedPrompt();
+openAIAPIKey.loadFromConfig();

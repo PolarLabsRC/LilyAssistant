@@ -6,7 +6,7 @@ import ExitIcon from "../images/exit.svg"
 import { view } from "../stores/view";
 import { OPTION_TYPE, OptionRecord } from "./options";
 import { textInput } from "../stores/textInput";
-import { advancedPropmpt } from "../stores/settings";
+import { advancedPrompt } from "../stores/settings";
 import { exit } from "@tauri-apps/api/process";
 
 export const settingsOptions = [
@@ -24,9 +24,9 @@ export const settingsOptions = [
         description: "Improves experience but increases costs (will change after conversation reset)",
         icon: PromptIcon,
         type: OPTION_TYPE.flag, 
-        status: advancedPropmpt,
+        status: advancedPrompt,
         callback: () => {
-            advancedPropmpt.togglePrompt();
+            advancedPrompt.togglePrompt();
         }
     }),
     new OptionRecord({

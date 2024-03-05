@@ -6,7 +6,6 @@
     import { textInput } from "../stores/textInput";
     import { resetChat, setupChat, tellAI } from "../functions/chat.js";
     import { onMount } from "svelte";
-    import { openAIAPIKey } from "../stores/settings";
     import ChatTypingMessage from "./ChatTypingMessage.svelte";
     import { get } from "svelte/store";
     // TODO "code" can be too long and exid ai msg
@@ -63,7 +62,7 @@
     bind:this={chatWrapper}
 >
     <div class="overlay {cleaning ? 'active' : ''}"></div>
-    {#if $chat.length <= 1}
+    {#if $chat.length == 0}
         <div
             class="m-auto flex flex-col justify-center leading-8 text-zinc-500"
         >
