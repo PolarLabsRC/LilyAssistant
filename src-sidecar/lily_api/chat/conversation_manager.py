@@ -19,3 +19,9 @@ class ConversationManager:
         except:
             raise ConversationNotFoundException()
         return conversation
+    
+    def save(self, conversation_id):
+        pass
+
+    def close(self, conversation_id):
+        pass

@@ -36,4 +36,4 @@ const createAdvancedPrompt = () => {
 };
 export const openAIAPIKey = createOpenAIAPIKey();
 export const advancedPrompt = createAdvancedPrompt();
-openAIAPIKey.loadFromConfig();
+await openAIAPIKey.loadFromConfig();

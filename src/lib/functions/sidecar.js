@@ -33,4 +33,24 @@ export const newChat = async (/** @type {string} */ apiKey) => {
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+export const close = async (conversationId) => {
+  try {
+      const data = {conversationId};
+      
+      const response = await fetch('http://localhost:1111/chat/close', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Sidecar is not available');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+    }
 };
+

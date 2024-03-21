@@ -2,7 +2,7 @@ import { HumanMessage } from "langchain/schema";
 import { chat, chatId, generatingFlag, getLastHumanMessage, isLastHumanMessage } from "../stores/chat";
 import { openAIAPIKey } from "../stores/settings";
 import { get } from "svelte/store";
-import { ask, newChat } from "./sidecar";
+import { close, ask, newChat } from "./sidecar";
 
 const NICK = "Penguin"
 
@@ -19,14 +19,20 @@ const scrollToBottom = (element) => {
 };
 
 export const resetChat = async () => {
-  const id = await newChat(get(openAIAPIKey))
-  chatId.setId(id.conversationId)
-  chat.reset()
+  try {
+    close(get(chatId))
+  } catch (_) {
+    
+  }
+  const id = await newChat(get(openAIAPIKey));
+  chatId.setId(id.conversationId);
+  chat.reset();
 
   // chat.addAIMessage(`Hi! What's up, ${NICK}?`); // TODO: add in settings
 };
 
 export const setupChat = (chatWrapper) => { // ODO: refactor this shit please
+  console.log(get(openAIAPIKey))
   resetChat()
 
   chat.subscribe(async (ch) => { // TODO: ugly but works

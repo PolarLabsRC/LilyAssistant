@@ -12,17 +12,20 @@ class AskIn(BaseModel):
     prompt: str
     conversationId: UUID
 
-
 class AskOut(BaseModel):
     message: str
-
 
 class NewIn(BaseModel):
     apiKey: str
 
-
 class NewOut(BaseModel):
     conversationId: UUID
+
+class ClearIn(BaseModel):
+    conversationId: UUID
+
+class ClearOut(BaseModel):
+    saved: bool
 
 
 @chat_router.post("/ask", response_model=AskOut)
@@ -30,7 +33,7 @@ def ask(msg: AskIn):
     try:
         conversation = conversation_manager.get(msg.conversationId)
     except ConversationNotFoundException as _:
-        raise HTTPException(status_code=404, detail="Conversation not found.")
+        raise HTTPException(status_code=404, detail="Conversation not found.") # TODO: Does not work
     response = conversation.ask(msg.prompt)
     return AskOut(message=response)
 
@@ -39,3 +42,9 @@ def ask(msg: AskIn):
 def new(msg: NewIn):
     id = conversation_manager.new(msg.apiKey)
     return NewOut(conversationId=id)
+
+@chat_router.post("/close", response_model=ClearOut)
+def close(msg: ClearIn):
+    conversation_manager.save(msg.conversationId)
+    conversation_manager.close(msg.conversationId)
+    return ClearOut(saved=True) # TODO: Implement checking

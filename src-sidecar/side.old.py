@@ -13,7 +13,6 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 
-os.environ["OPENAI_API_KEY"] = "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"
 
 model = ChatOpenAI(temperature=0)
 
