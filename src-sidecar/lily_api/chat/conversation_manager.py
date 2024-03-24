@@ -24,4 +24,4 @@ class ConversationManager:
         pass
 
     def close(self, conversation_id):
-        pass
+        self.conversations.pop(conversation_id)

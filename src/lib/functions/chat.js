@@ -36,7 +36,7 @@ export const setupChat = (chatWrapper) => { // ODO: refactor this shit please
   resetChat()
 
   chat.subscribe(async (ch) => { // TODO: ugly but works
-    scrollToBottom(chatWrapper);
+      scrollToBottom(chatWrapper);
     if (!isLastHumanMessage(ch)) {
       return;
     }
