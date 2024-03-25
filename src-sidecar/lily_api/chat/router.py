@@ -1,3 +1,4 @@
+import traceback
 from uuid import UUID
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
@@ -40,7 +41,16 @@ def ask(msg: AskIn):
 
 @chat_router.post("/new/", response_model=NewOut)
 def new(msg: NewIn):
-    id = conversation_manager.new(msg.apiKey)
+    try:
+        id = conversation_manager.new(msg.apiKey)
+    except Exception as e:
+    # Obsługa wyjątku
+        
+        # Zapisanie wyjątku do pliku
+        with open("wyjatek.txt", "w") as file:
+            file.write("Wystąpił wyjątek: {}\n\n".format(e))
+            traceback.print_exc(file=file)  # Dodajmy także informacje traceback
+            
     return NewOut(conversationId=id)
 
 @chat_router.post("/close/", response_model=ClearOut)

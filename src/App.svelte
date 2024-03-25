@@ -16,6 +16,7 @@
     import { settingsOptions } from "./lib/functions/settings";
     import { openAIAPIKey } from "./lib/stores/settings";
     import { get } from "svelte/store";
+    import { Command } from "@tauri-apps/api/shell";
     
     let textarea;
 
@@ -25,6 +26,7 @@
     $: apiSettingsActive = (() => $view === VIEWS.apiSettings)();
     
     onMount(async () => {
+
         setupWindow();
         await openOnShortcut();
         await closeOnFocusLost(textarea);

@@ -1,16 +1,16 @@
+import { ResponseType, Body, getClient } from "@tauri-apps/api/http";
+
+const client = await getClient()
 export const ask = async (prompt, /** @type {string} */ conversationId) => {
     const data = { prompt, conversationId };
     try {
-        const response = await fetch('http://localhost:1111/chat/ask/', {
+        const response = await client.request({
+            url: 'http://localhost:1111/chat/ask/',
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: Body.json(data),
         });
 
-        if (!response.ok) {
-            throw new Error('Sidecar is not available');
-        }
-        return await response.json();
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
     }
@@ -18,37 +18,31 @@ export const ask = async (prompt, /** @type {string} */ conversationId) => {
 
 
 export const newChat = async (/** @type {string} */ apiKey) => {
+    const data = { apiKey }
     try {
-        const data = {apiKey}
-        const response = await fetch('http://localhost:1111/chat/new/', {
+        const response = await client.request({
+            url: 'http://localhost:1111/chat/new/',
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: Body.json(data),
         });
 
-        if (!response.ok) {
-            throw new Error('Sidecar is not available');
-        }
-        return await response.json();
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
 export const close = async (conversationId) => {
-  try {
-      const data = {conversationId};
-      
-      const response = await fetch('http://localhost:1111/chat/close/', {
+    try {
+        const data = { conversationId };
+
+        const response = await client.request({
+            url: 'http://localhost:1111/chat/close/',
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: Body.json(data),
         });
 
-        if (!response.ok) {
-            throw new Error('Sidecar is not available');
-        }
-        return await response.json();
+        return response.data;
     } catch (error) {
         console.error('Error:', error);
     }
