@@ -19,12 +19,11 @@ const scrollToBottom = (element) => {
 };
 
 export const resetChat = async () => {
-  try {
+  if (get(chatId) !== "") {
     close(get(chatId))
-  } catch (_) {
-    
   }
   const id = await newChat(get(openAIAPIKey));
+  console.log(id)
   chatId.setId(id.conversationId);
   chat.reset();
 

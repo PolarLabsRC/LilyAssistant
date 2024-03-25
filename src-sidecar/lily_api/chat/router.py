@@ -28,7 +28,7 @@ class ClearOut(BaseModel):
     saved: bool
 
 
-@chat_router.post("/ask", response_model=AskOut)
+@chat_router.post("/ask/", response_model=AskOut)
 def ask(msg: AskIn):
     try:
         conversation = conversation_manager.get(msg.conversationId)
@@ -38,12 +38,12 @@ def ask(msg: AskIn):
     return AskOut(message=response)
 
 
-@chat_router.post("/new", response_model=NewOut)
+@chat_router.post("/new/", response_model=NewOut)
 def new(msg: NewIn):
     id = conversation_manager.new(msg.apiKey)
     return NewOut(conversationId=id)
 
-@chat_router.post("/close", response_model=ClearOut)
+@chat_router.post("/close/", response_model=ClearOut)
 def close(msg: ClearIn):
     conversation_manager.save(msg.conversationId)
     conversation_manager.close(msg.conversationId)

@@ -1,7 +1,7 @@
 export const ask = async (prompt, /** @type {string} */ conversationId) => {
     const data = { prompt, conversationId };
     try {
-        const response = await fetch('http://localhost:1111/chat/ask', {
+        const response = await fetch('http://localhost:1111/chat/ask/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -20,7 +20,7 @@ export const ask = async (prompt, /** @type {string} */ conversationId) => {
 export const newChat = async (/** @type {string} */ apiKey) => {
     try {
         const data = {apiKey}
-        const response = await fetch('http://localhost:1111/chat/new', {
+        const response = await fetch('http://localhost:1111/chat/new/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -39,7 +39,7 @@ export const close = async (conversationId) => {
   try {
       const data = {conversationId};
       
-      const response = await fetch('http://localhost:1111/chat/close', {
+      const response = await fetch('http://localhost:1111/chat/close/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)

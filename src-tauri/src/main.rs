@@ -1,9 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 extern crate x11;
-use x11::xlib;
-use std::ptr;
 use std::process;
+use std::ptr;
+use tauri::api::process::Command;
+use x11::xlib;
 
 // Global variable to store window_id
 // TODO: can spawn multiple windows on X and be unreliable in focusing
@@ -79,12 +80,16 @@ fn focus_window() {
         let filtered_ids: Vec<xlib::Window> = unsafe {
             std::slice::from_raw_parts(children, nchildren as usize)
                 .iter()
-                .filter_map(|&window| get_window_pid(display, window).filter(|&pid| pid == target_pid).map(|_| window))
+                .filter_map(|&window| {
+                    get_window_pid(display, window)
+                        .filter(|&pid| pid == target_pid)
+                        .map(|_| window)
+                })
                 .collect()
         };
-    
+
         unsafe { xlib::XFree(children as *mut std::ffi::c_void) };
-    
+
         filtered_ids.last().cloned()
     };
 
@@ -102,6 +107,11 @@ fn focus_window() {
     }
 }
 fn main() {
+    let new_sidecar = Command::new_sidecar("sidecar");
+    let (_rx, _child) = new_sidecar
+        .expect("failed to create `my-sidecar` binary command")
+        .spawn()
+        .expect("Failed to spawn sidecar");
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![focus_window])
         .plugin(tauri_plugin_store::Builder::default().build())
